@@ -1,0 +1,200 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="KIPOINT.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - KIPOINT</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="/Scripts/lib/main.css" rel="stylesheet" /> 
+    <script src="/Scripts/lib/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                       <%if (Session["user_type"].ToString() == "Residential")
+                        { %>
+                    <a class="navbar-brand" runat="server" href="User/Residential/Index.aspx">KIPOINT</a>
+                    <%}
+                        else
+                        { %>
+                    <a class="navbar-brand" runat="server" href="~/">KIPOINT</a>
+                    <%} %>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <%-- For residential --%>
+                        <%if (Session["user_type"].ToString() == "Residential") { %>
+                        <li><a runat="server" href="~/User/Residential/RequestScheduleVenue.aspx">Schedule Venue</a></li>
+                        <li><a runat="server" href="~/User/Residential/ReservationEquipment.aspx">Reservation Equipment</a></li>
+                        <%-- For Staff/Admin --%>
+                        <%} else { %>
+                        <li><a runat="server" href="Position_List.aspx">Barangay Officials</a></li>
+                        <li><a runat="server" href="Residential_List.aspx">Residential</a></li>
+                        <li><a runat="server" href="Blotter.aspx">Blotter</a></li>
+                        <li><a runat="server" href="scheduling_venue.aspx">Schedule Venue</a></li>
+                        <li><a runat="server" href="Reservation.aspx">Reservation Equipment</a></li>
+                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Other Management<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a runat="server" href="Other management/Barangay_information.aspx">Barangay info</a></li>
+                                <li><a runat="server" href="Other management/Religion.aspx">Religion</a></li>
+                                <li><a runat="server" href="Other management/Position.aspx">Position   </a></li>
+                                <li><a runat="server" href="Other management/Venue.aspx">Venue</a></li>
+                                <li><a runat="server" href="Other management/Term.aspx">Term</a></li>
+                                <li><a runat="server" href="Other management/Equipment.aspx">Equipment</a></li>
+                            </ul>
+                        </li>
+                         <% } %>
+                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Account<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <%-- For Staff --%>
+                                <% if (Session["user_type"].ToString() == "Staff")
+                                    {%>
+                                <li><a runat="server" href="User/Account.aspx">Update Account</a></li>
+                                <li><a runat="server" href="User/Change_pass.aspx">Change Password</a></li>
+                                <li class="divider" role="separator"></li>
+                                <li><a runat="server" href="LoginPage.aspx">Logout</a></li>
+
+                                <%-- For Residential --%>
+                                <% }
+                                    else if (Session["user_type"].ToString() == "Residential")
+                                    { %>
+                                <li><a runat="server" href="User/Account.aspx">Update Account</a></li>
+                                <li><a runat="server" href="User/Change_pass.aspx">Change Password</a></li>
+                                <li class="divider" role="separator"></li>
+                                <li><a runat="server" href="LoginPage.aspx">Logout</a></li>
+
+                                <%-- For Admin --%>
+                                <%} else {%>
+                                <li><a runat="server" href="User/UserList.aspx">User Management</a></li>
+                                <li><a runat="server" href="User/Retrieve.aspx">Retrieve Management</a></li>
+                                <li><a runat="server" href="User/Account.aspx">Update Account</a></li>
+                                <li><a runat="server" href="User/Change_pass.aspx">Change Password</a></li>
+                                <li class="divider" role="separator"></li>
+                                <li><a runat="server" href="LoginPage.aspx">Logout</a></li>
+                                <% }%>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                <p>&copy; <%: DateTime.Now.Year %> - KIPOINT</p>
+            </footer>
+        </div>
+
+    </form>
+
+</body>
+</html>
+
+<%--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+   
+    const eventArray = [];
+    
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "Default.aspx/GetScheduleVenue",
+            contentType: "application/json; charset=utf-8",
+            data: "{}",
+            dataType: "json",
+            success: function (response) {
+                $.each(response.d, function (i, v) {
+                    eventArray.push({
+                        title: v.venue,
+                        start: v.date_start + "T" + v.venue_start,
+                        end: v.date_end + "T" + v.venue_end,
+                        description: v.purpose,
+                        status: v.status,
+                        color: (v.status == "Pending" ? 'yellow' : (v.status == "Approved" ? 'green' : (v.status ==  "Cancel" ? 'red' : 'aqua'))),
+                    })
+                });
+                console.log(eventArray);
+                initCalender(eventArray);
+            },
+            failure: function (response) {
+                alert(response.d);
+            },
+            error: function (response) {
+                alert(response.d);
+            }
+        });
+    });
+
+
+  
+    
+
+    function initCalender(data) {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            navLinks: true,
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            events: (data)
+        });
+        calendar.render();
+               
+   
+    }
+    
+
+
+    $(document).ready(function () {
+        $('#logout').on('click', function () {
+            Session.clear();        
+        })
+    })
+
+</script>--%>
